@@ -1,0 +1,78 @@
+@import "variables";
+@import "normalize";
+@import "mixins";
+@import "base";
+
+
+
+@import "modules/media";
+@import "modules/background";
+
+@mixin colorChange {
+  color: azure;
+  width: 200px;
+}
+
+
+ol {
+  @include colorChange;
+  width: 80& - 40%;
+  margin: 0 auto;
+}
+
+#{&}__paragraph2 {
+  @extend .main__paragraph1;
+
+
+@include mobile {
+  flex-direction: column;
+}
+
+@mixin theme ($light-theme: true) {
+  @if $light-theme {
+    background:lighten ($primary-color, 100%);
+    color: darken($text-color, 100%);
+  }
+}
+
+.light {
+  @include theme ($light-theme: true)
+}
+
+
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+$breakpoints: (
+  'small':  767px,
+  'medium': 992px,
+  'large':  1200px
+) !default;
+
+@mixin respond-to($breakpoint) {
+  
+  @if map-has-key($breakpoints, $breakpoint) {
+  
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+
+  .container1 {
+    color: red;
+    
+    @include respond-to('small') {
+      color: blue;
+    }
+  }
+  .container1 {
+    color: red;
+  }
+  @media (min-width: 767px) {
+    .selector {
+      color: blue;
+    }
+  }
